@@ -72,3 +72,45 @@ def CalculateHoursMintues(hours=0, minutes=0, totalHours=0, totalMinutes=0):
     totalMinutes = totalMinutes/60
     totalHours += totalMinutes
     return totalHours
+
+def check_type(var):
+    if type(var) is str:
+        return True
+    else:
+        return False
+        
+def ArisHours(meetingTime, totalHours_Ari):
+    if check_type(meetingTime):
+
+        hours = meetingHours(meetingTime)
+        minutes = meetingMinutes(meetingTime)
+
+        totalHours_Ari += CalculateHoursMintues(hours,minutes)
+        return totalHours_Ari
+    
+    else:
+        return totalHours_Ari
+
+def GilatsHours(meetingTime, totalHours_Gilat):
+    if check_type(meetingTime):
+
+        hours = meetingHours(meetingTime)
+        minutes = meetingMinutes(meetingTime)
+
+        totalHours_Gilat += CalculateHoursMintues(hours,minutes)
+        return totalHours_Gilat
+    
+    else:
+        return totalHours_Gilat
+
+def EmergencysHours(meetingTime, totalHours_emergency):
+    if check_type(meetingTime):
+
+        hours = meetingHours(meetingTime)
+        minutes = meetingMinutes(meetingTime)
+
+        totalHours_emergency += CalculateHoursMintues(hours,minutes)
+        return totalHours_emergency
+    
+    else:
+        return totalHours_emergency
