@@ -1,3 +1,7 @@
+#01.20 Ari < 154 < Gilat < 400
+#02.20 Ari < 175 < Gilat < 430
+#03.20 Ari < 167 < Gilat < 436
+
 from functions import *
 
 df = readFile("1.20.xlsx")
