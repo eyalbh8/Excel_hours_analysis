@@ -23,21 +23,21 @@ for meeting in meetingsList:
    if meetingLine < 154:
        
       if check_type(name):
-         totalHours_Ari = ArisHours(meetingTime, totalHours_Ari)
+         totalHours_Ari = DoctorHours(meetingTime, totalHours_Ari)
       
       else:
          pass
     
    elif 154 < meetingLine < 400:
       if check_type(name):
-         totalHours_Gilat = GilatsHours(meetingTime, totalHours_Gilat)
+         totalHours_Gilat = DoctorHours(meetingTime, totalHours_Gilat)
       
       else:
          pass
 
    else:
       if check_type(name):
-         totalHours_Emergency = EmergencysHours(meetingTime, totalHours_Emergency)
+         totalHours_Emergency = DoctorHours(meetingTime, totalHours_Emergency)
       
       else:
          pass

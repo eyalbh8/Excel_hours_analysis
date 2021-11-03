@@ -1,7 +1,7 @@
 import pandas as pd
 
-def readFile():
-    df = pd.read_excel("chalender.xlsx")
+def readFile(file):
+    df = pd.read_excel(file)
     return df
 
 def Extracting_HoursData(df):
@@ -42,7 +42,6 @@ def meetingMinutes(meeting):
 
     return int(calculateMinutes)
 
-
 def CalculateHoursMintues(hours=0, minutes=0, totalHours=0, totalMinutes=0):
 
     if minutes < 0 and hours == 0:
@@ -56,6 +55,7 @@ def CalculateHoursMintues(hours=0, minutes=0, totalHours=0, totalMinutes=0):
             totalMinutes += -1 * minutes
         else:
             totalMinutes += 60 + minutes
+            totalHours = hours -1
         
     elif hours < 0:
         if minutes < 0:
@@ -65,7 +65,7 @@ def CalculateHoursMintues(hours=0, minutes=0, totalHours=0, totalMinutes=0):
                 else: 
                     totalMinutes += 60 + minutes
             else:
-                hours += (-1 * hours) - 1
+                totalHours += (-1 * hours) - 1
                 if minutes >= -30:
                     totalMinutes += -1 * minutes
                 else: 
@@ -88,38 +88,14 @@ def check_type(var):
     else:
         return False
         
-def ArisHours(meetingTime, totalHours_Ari):
+def DoctorHours(meetingTime, totalHours):
     if check_type(meetingTime):
 
         hours = meetingHours(meetingTime)
         minutes = meetingMinutes(meetingTime)
 
-        totalHours_Ari += CalculateHoursMintues(hours,minutes)
-        return totalHours_Ari
+        totalHours += CalculateHoursMintues(hours,minutes)
+        return totalHours
     
     else:
-        return totalHours_Ari
-
-def GilatsHours(meetingTime, totalHours_Gilat):
-    if check_type(meetingTime):
-
-        hours = meetingHours(meetingTime)
-        minutes = meetingMinutes(meetingTime)
-
-        totalHours_Gilat += CalculateHoursMintues(hours,minutes)
-        return totalHours_Gilat
-    
-    else:
-        return totalHours_Gilat
-
-def EmergencysHours(meetingTime, totalHours_emergency):
-    if check_type(meetingTime):
-
-        hours = meetingHours(meetingTime)
-        minutes = meetingMinutes(meetingTime)
-
-        totalHours_emergency += CalculateHoursMintues(hours,minutes)
-        return totalHours_emergency
-    
-    else:
-        return totalHours_emergency
+        return totalHours
