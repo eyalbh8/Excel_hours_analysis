@@ -83,7 +83,7 @@ def CalculateHoursMintues(hours=0, minutes=0, totalHours=0, totalMinutes=0):
     return totalHours
 
 def check_type(var):
-    if type(var) is str:
+    if type(var) is str and var != "OutLook לא ידוע":
         return True
     else:
         return False
