@@ -16,4 +16,4 @@ Using tKiner to make accessible entering the name of the file and the lines you 
 
 ## pandas
 
-Reading and analyzing with multiple functions and using pandas
+Apply pandas abilities by using it in several functions
