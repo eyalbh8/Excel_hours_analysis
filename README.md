@@ -1,1 +1,1 @@
-"# Excel_hours_analysis" 
+A GUI app for calculating hours in excel file
