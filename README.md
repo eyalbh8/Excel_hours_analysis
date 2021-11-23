@@ -4,7 +4,8 @@ Analyzing data by calculating hours from excel file using tKinter and pandas lib
 
 ## GUI 
 
-Using tKiner to make accessible entering the name of the file and the lines you need to analyze and the solution is also printed in a tKinter window
+Using tKiner to make accessible entering the name of the file and the lines you need to analyze. 
+The solution is also printed in a tKinter window
 
 ### First window
 
