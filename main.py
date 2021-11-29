@@ -24,21 +24,21 @@ window.title("בס''ד")
 
 
 FileName = tk.StringVar()
-FileName_label = tk.Label(window, text = "File's name", font=('calibre',14, 'bold'))
+FileName_label = tk.Label(window, text = "File's name", font=('calibre',16, 'bold'))
 FileName_label.grid(row=0,column=1)
-FileName_entry = tk.Entry(window,textvariable = FileName, font=('calibre',14,'normal'))
+FileName_entry = tk.Entry(window,textvariable = FileName, font=('calibre',16,'normal'))
 FileName_entry.grid(row=1,column=1)
 
 Ari_var = tk.IntVar()
-Ari_label = tk.Label(window, text = "Ari's last line", font=('calibre',14, 'bold'))
+Ari_label = tk.Label(window, text = "Ari's last line", font=('calibre',16, 'bold'))
 Ari_label.grid(row=2,column=1)
-Ari_entry = tk.Entry(window,textvariable = Ari_var, font=('calibre',14,'normal'))
+Ari_entry = tk.Entry(window,textvariable = Ari_var, font=('calibre',16,'normal'))
 Ari_entry.grid(row=3,column=1)
 
 Gilat_var = tk.IntVar()
-Gilat_label = tk.Label(window, text = "Gilat's last line", font=('calibre',14, 'bold'))
+Gilat_label = tk.Label(window, text = "Gilat's last line", font=('calibre',16, 'bold'))
 Gilat_label.grid(row=4,column=1)
-Gilat_entry = tk.Entry(window,textvariable = Gilat_var, font=('calibre',14,'normal'))
+Gilat_entry = tk.Entry(window,textvariable = Gilat_var, font=('calibre',16,'normal'))
 Gilat_entry.grid(row=5,column=1)
 
 end = tk.Button(window,bg="black", fg="white",text="סיים",command=Execute)
