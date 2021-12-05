@@ -47,12 +47,8 @@ def meetingMinutes(meeting):
 def CalculateHoursMintues(hours=0, minutes=0, totalHours=0):
     if minutes < 0:
         hours -= 1
-        if minutes > -30:
-            minutes = 60 + minutes
-        
-        else:
-            minutes = -1 * minutes
-    
+        minutes = 60 + minutes
+   
     totalHours = hours + minutes/60
     return(totalHours)
     
