@@ -5,18 +5,18 @@ def readFile(file):
     df = pd.read_excel(file)
     return df
 
-def Extracting_HoursData(df):
+def Extracting_HoursData(df, column):
     ColumnsHeadlines = df.columns.ravel()
-    meetingsTime = df[ColumnsHeadlines[9]]
+    meetingsTime = df[ColumnsHeadlines[column]]
     Times = pd.DataFrame(meetingsTime)
 
     ListOf_MeetingsHours = [row for row in Times.iterrows()]
 
     return ListOf_MeetingsHours
 
-def CustomersNames_List(df):
+def CustomersNames_List(df, column):
     ColumnsHeadlines = df.columns.ravel()
-    CustomerName = df[ColumnsHeadlines[8]]
+    CustomerName = df[ColumnsHeadlines[column]]
     Names = pd.DataFrame(CustomerName)
 
     ListOf_Names = [row for row in Names.iterrows()]
@@ -28,7 +28,10 @@ def meetingHours(meeting):
     meetings_BeginList = meetingList[0].split(":")
     meetings_EndsList = meetingList[1].split(":")
 
-    if int(meetings_BeginList[0]) < int(meetings_EndsList[0]):
+    if int(meetings_BeginList[0]) < 8:
+        return False
+
+    elif int(meetings_BeginList[0]) < int(meetings_EndsList[0]):
         calculateHours = int(meetings_EndsList[0]) - int(meetings_BeginList[0])
         return int(calculateHours)
     
@@ -48,8 +51,9 @@ def CalculateHoursMintues(hours=0, minutes=0, totalHours=0):
     if minutes < 0:
         hours -= 1
         minutes = 60 + minutes
-   
+      
     totalHours = hours + minutes/60
+    print(hours, minutes)
     return(totalHours)
     
     
@@ -65,19 +69,23 @@ def DoctorHours(meetingTime, totalHours):
         hours = meetingHours(meetingTime)
         minutes = meetingMinutes(meetingTime)
 
-        totalHours += CalculateHoursMintues(hours,minutes)
-        return totalHours
+        if hours is False:
+            return totalHours
+        
+        else:
+            totalHours += CalculateHoursMintues(hours,minutes)
+            return totalHours
     
     else:
         return totalHours
 
-def Main(fileName, Ari_LastLine, Gilat_LastLine):
+def Main(fileName, Ari_LastLine, Gilat_LastLine, Hours_column, Names_column):
 
     df = readFile(str(fileName))
 
-    meetingsList = Extracting_HoursData(df)
+    meetingsList = Extracting_HoursData(df, Hours_column)
 
-    names = CustomersNames_List(df)
+    names = CustomersNames_List(df, Names_column)
 
     totalHours_Ari = 0
     totalHours_Gilat = 0
