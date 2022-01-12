@@ -11,19 +11,16 @@
 #11.21 Ari < 186 < Gilat < 403        #11.20 Ari < 213 < Gilat < 474
                                       #12.20 Ari < 193 < Gilat < 406
 import tkinter as tk
-from functions import *
+from main_function import *
 
 def Execute():
    fileName = FileName.get()
-   Ari_LastLine = Ari_var.get()
-   Gilat_LastLine = Gilat_var.get()
-   Hours_Column = Hours_Column_var.get()
-   Names_Column = Names_Column_var.get()
-   Main(fileName, Ari_LastLine, Gilat_LastLine, Hours_Column, Names_Column)
+   Ari_days = Ari_var.get()
+   Gilat_days = Gilat_var.get()
+   Main(fileName, Ari_days, Gilat_days)
 
 window = tk.Tk()
 window.title("בס''ד")
-
 
 FileName = tk.StringVar()
 FileName_label = tk.Label(window, text = "File's name", font=('calibre',16, 'bold'))
@@ -32,28 +29,16 @@ FileName_entry = tk.Entry(window,textvariable = FileName, font=('calibre',16,'no
 FileName_entry.grid(row=1,column=1)
 
 Ari_var = tk.IntVar()
-Ari_label = tk.Label(window, text = "Ari's last line", font=('calibre',16, 'bold'))
+Ari_label = tk.Label(window, text = "Ari's days", font=('calibre',16, 'bold'))
 Ari_label.grid(row=2,column=1)
 Ari_entry = tk.Entry(window,textvariable = Ari_var, font=('calibre',16,'normal'))
 Ari_entry.grid(row=3,column=1)
 
-Hours_Column_var = tk.IntVar()
-Hours_Column_label = tk.Label(window, text = "Hours column", font=('calibre',16, 'bold'))
-Hours_Column_label.grid(row=2,column=2)
-Hours_Column_entry = tk.Entry(window,textvariable = Hours_Column_var, font=('calibre',16,'normal'))
-Hours_Column_entry.grid(row=3,column=2)
-
 Gilat_var = tk.IntVar()
-Gilat_label = tk.Label(window, text = "Gilat's last line", font=('calibre',16, 'bold'))
+Gilat_label = tk.Label(window, text = "Gilat's days", font=('calibre',16, 'bold'))
 Gilat_label.grid(row=4,column=1)
 Gilat_entry = tk.Entry(window,textvariable = Gilat_var, font=('calibre',16,'normal'))
 Gilat_entry.grid(row=5,column=1)
-
-Names_Column_var = tk.IntVar()
-Names_Column_label = tk.Label(window, text = "Names column", font=('calibre',16, 'bold'))
-Names_Column_label.grid(row=4,column=2)
-Names_Column_entry = tk.Entry(window,textvariable = Names_Column_var, font=('calibre',16,'normal'))
-Names_Column_entry.grid(row=5,column=2)
 
 end = tk.Button(window,bg="black", fg="white",text="סיים",command=Execute)
 end.grid(row=6,column=1)

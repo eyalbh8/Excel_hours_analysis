@@ -1,67 +1,6 @@
-import pandas as pd
 import tkinter as tk
-
-def readFile(file):
-    df = pd.read_excel(file)
-    return df
-
-def Extracting_HoursData(df, column):
-    ColumnsHeadlines = df.columns.ravel()
-    meetingsTime = df[ColumnsHeadlines[column]]
-    Times = pd.DataFrame(meetingsTime)
-
-    ListOf_MeetingsHours = [row for row in Times.iterrows()]
-
-    return ListOf_MeetingsHours
-
-def CustomersNames_List(df, column):
-    ColumnsHeadlines = df.columns.ravel()
-    CustomerName = df[ColumnsHeadlines[column]]
-    Names = pd.DataFrame(CustomerName)
-
-    ListOf_Names = [row for row in Names.iterrows()]
-
-    return ListOf_Names
-
-def meetingHours(meeting):
-    meetingList = meeting.split("-")
-    meetings_BeginList = meetingList[0].split(":")
-    meetings_EndsList = meetingList[1].split(":")
-
-    if int(meetings_BeginList[0]) < 8:
-        return False
-
-    elif int(meetings_BeginList[0]) < int(meetings_EndsList[0]):
-        calculateHours = int(meetings_EndsList[0]) - int(meetings_BeginList[0])
-        return int(calculateHours)
-    
-    else:
-        return 0
-       
-    
-def meetingMinutes(meeting):
-    meetingList = meeting.split("-")
-    meetings_EndsList = meetingList[1].split(":")
-    meetings_BeginList = meetingList[0].split(":")
-
-    calculateMinutes = int(meetings_EndsList[1]) - int(meetings_BeginList[1])
-    return int(calculateMinutes)
-
-def CalculateHoursMintues(hours=0, minutes=0, totalHours=0):
-    if minutes < 0:
-        hours -= 1
-        minutes = 60 + minutes
-      
-    totalHours = hours + minutes/60
-    print(hours, minutes)
-    return(totalHours)
-    
-    
-def check_type(var):
-    if type(var) is str and var != "OutLook לא ידוע" and var != "*":
-        return True
-    else:
-        return False
+from Analyzing_hours import *
+from Excel_functions import *
         
 def DoctorHours(meetingTime, totalHours):
     if check_type(meetingTime):
@@ -79,25 +18,32 @@ def DoctorHours(meetingTime, totalHours):
     else:
         return totalHours
 
-def Main(fileName, Ari_LastLine, Gilat_LastLine, Hours_column, Names_column):
+def Main(fileName, Ari_Days, Gilat_Days):
 
     df = readFile(str(fileName))
 
-    meetingsList = Extracting_HoursData(df, Hours_column)
+    Meetings_Hours_List = Extracting_HoursData(df)
 
-    names = CustomersNames_List(df, Names_column)
+    names = CustomersNames_List(df)
 
     totalHours_Ari = 0
     totalHours_Gilat = 0
     totalHours_Emergency = 0
+    count_days = 0
 
-    for meeting in meetingsList:
-        meetingTime = meeting[1][0]
-        meetingLine = int(meeting[0])
-
-        name = names[meetingLine][1][0]
-
-        if meetingLine < Ari_LastLine:
+    for meeting in Meetings_Hours_List.iterrows():
+        try:
+            meetingTime = meeting[1][1][0]
+            meetingLine = int(meeting[1][0])
+            name = names[meetingLine][1][0]
+        
+        except:
+            count_days += 1
+            meetingTime = 0
+            meetingLine = np.nan 
+            name = 0
+   
+        if count_days < Ari_Days:
        
             if check_type(name):
                 totalHours_Ari = DoctorHours(meetingTime, totalHours_Ari)
@@ -105,7 +51,10 @@ def Main(fileName, Ari_LastLine, Gilat_LastLine, Hours_column, Names_column):
             else:
                 pass
     
-        elif Ari_LastLine < meetingLine < Gilat_LastLine:
+        elif Ari_Days <= count_days < Gilat_Days + Ari_Days:
+            if count_days == Ari_Days:
+                print(meeting, name)
+
             if check_type(name):
                 totalHours_Gilat = DoctorHours(meetingTime, totalHours_Gilat)
       
@@ -113,12 +62,15 @@ def Main(fileName, Ari_LastLine, Gilat_LastLine, Hours_column, Names_column):
                pass
 
         else:
+            if count_days == Gilat_Days + Ari_Days:
+                print(meeting, name)
+
             if check_type(name):
                 totalHours_Emergency = DoctorHours(meetingTime, totalHours_Emergency)
       
             else:
                 pass
-
+        
     printResult(totalHours_Ari, totalHours_Gilat, totalHours_Emergency)
 
 def printResult(totalHours_Ari, totalHours_Gilat, totalHours_Emergency):
