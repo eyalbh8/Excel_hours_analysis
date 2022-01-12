@@ -21,6 +21,7 @@ def DoctorHours(meetingTime, totalHours):
 def Main(fileName, Ari_Days, Gilat_Days):
 
     df = readFile(str(fileName))
+    df = Remove_Unecessary_row(df)
 
     Meetings_Hours_List = Extracting_HoursData(df)
 

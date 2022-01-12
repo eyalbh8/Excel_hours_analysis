@@ -5,6 +5,13 @@ def readFile(file):
     df = pd.read_excel(file)
     return df
 
+def Remove_Unecessary_row(df):
+    COLUMN_LEN = len(df.columns) - 1
+    if df.columns[COLUMN_LEN] == f"Unnamed: {COLUMN_LEN}":
+       return df.drop(0)
+    
+    else:
+        return df
 def check_type(var):
     if type(var) is str and var != "OutLook לא ידוע" and var != "*":
         return True
