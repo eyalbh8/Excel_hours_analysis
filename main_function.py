@@ -1,102 +1,101 @@
 import tkinter as tk
-from Analyzing_hours import *
-from Excel_functions import *
+from analyzing_hours import *
+from excel_functions import *
         
-def DoctorHours(meetingTime, totalHours):
-    if check_type(meetingTime):
+def doctor_hours(meeting_time, total_hours):
+    if check_type(meeting_time):
 
-        hours = meetingHours(meetingTime)
-        minutes = meetingMinutes(meetingTime)
+        hours = meeting_hours(meeting_time)
+        minutes = meeting_minutes(meeting_time)
 
         if hours is False:
-            return totalHours
+            return total_hours
         
         else:
-            totalHours += CalculateHoursMintues(hours,minutes)
-            return totalHours
+            total_hours += calculate_hours_minutes(hours, minutes)
+            return total_hours
     
     else:
-        return totalHours
+        return total_hours
 
-def Main(fileName, Ari_Days, Gilat_Days):
+def main(file_name, ari_days, gilat_days):
 
-    df = readFile(str(fileName))
-    df = Remove_Unecessary_row(df)
+    df = read_file(str(file_name))
+    df = remove_unnecessary_row(df)
 
-    Meetings_Hours_List = Extracting_HoursData(df)
+    meetings_hours_list = extracting_hours_data(df)
 
-    names = CustomersNames_List(df)
+    names = customers_names_list(df)
 
-    totalHours_Ari = 0
-    totalHours_Gilat = 0
-    totalHours_Emergency = 0
+    total_hours_ari = 0
+    total_hours_gilat = 0
+    total_hours_emergency = 0
     count_days = 0
 
-    for meeting in Meetings_Hours_List.iterrows():
+    for meeting in meetings_hours_list.iterrows():
         try:
-            meetingTime = meeting[1][1][0]
-            meetingLine = int(meeting[1][0])
-            name = names[meetingLine][1][0]
+            meeting_time = meeting[1][1][0]
+            meeting_line = int(meeting[1][0])
+            name = names[meeting_line][1][0]
         
-        except:
+        except ValueError:
             count_days += 1
-            meetingTime = 0
-            meetingLine = np.nan 
+            meeting_time = 0
             name = 0
    
-        if count_days < Ari_Days:
+        if count_days < ari_days:
        
             if check_type(name):
-                totalHours_Ari = DoctorHours(meetingTime, totalHours_Ari)
+                total_hours_ari = doctor_hours(meeting_time, total_hours_ari)
       
             else:
                 pass
     
-        elif Ari_Days <= count_days < Gilat_Days + Ari_Days:
-            if count_days == Ari_Days:
+        elif ari_days <= count_days < gilat_days + ari_days:
+            if count_days == ari_days:
                 print(meeting, name)
 
             if check_type(name):
-                totalHours_Gilat = DoctorHours(meetingTime, totalHours_Gilat)
+                total_hours_gilat = doctor_hours(meeting_time, total_hours_gilat)
       
             else:
                pass
 
         else:
-            if count_days == Gilat_Days + Ari_Days:
+            if count_days == gilat_days + ari_days:
                 print(meeting, name)
 
             if check_type(name):
-                totalHours_Emergency = DoctorHours(meetingTime, totalHours_Emergency)
+                total_hours_emergency = doctor_hours(meeting_time, total_hours_emergency)
       
             else:
                 pass
         
-    printResult(totalHours_Ari, totalHours_Gilat, totalHours_Emergency)
+    print_result(total_hours_ari, total_hours_gilat, total_hours_emergency)
 
-def printResult(totalHours_Ari, totalHours_Gilat, totalHours_Emergency):
+def print_result(total_hours_ari, total_hours_gilat, total_hours_emergency):
     window = tk.Tk()
     window.title("GO ILANA!!")
 
-    Result_label = tk.Label(window, text = "Result", font=('calibre',14, 'bold'))
-    Result_label.grid(row=0,column=1)
+    result_label = tk.Label(window, text = "Result", font=('calibre',14, 'bold'))
+    result_label.grid(row=0,column=1)
 
-    Ari_label = tk.Label(window, text = "Ari's hours:", font=('calibre',14, 'bold'))
-    Ari_label.grid(row=2,column=0)
+    ari_label = tk.Label(window, text = "Ari's hours:", font=('calibre',14, 'bold'))
+    ari_label.grid(row=2,column=0)
 
-    AriResult_label = tk.Label(window, text = str(totalHours_Ari), font=('calibre',14, 'bold'))
-    AriResult_label.grid(row=2,column=2)
+    ari_result_label = tk.Label(window, text = str(total_hours_ari), font=('calibre', 14, 'bold'))
+    ari_result_label.grid(row=2,column=2)
 
-    Gilat_label = tk.Label(window, text = "Gilat's hours:", font=('calibre',14, 'bold'))
-    Gilat_label.grid(row=3,column=0)
+    gilat_label = tk.Label(window, text = "Gilat's hours:", font=('calibre',14, 'bold'))
+    gilat_label.grid(row=3,column=0)
 
-    GilatResult_label = tk.Label(window, text = str(totalHours_Gilat), font=('calibre',14, 'bold'))
-    GilatResult_label.grid(row=3,column=2)
+    gilat_result_label = tk.Label(window, text = str(total_hours_gilat), font=('calibre', 14, 'bold'))
+    gilat_result_label.grid(row=3,column=2)
 
-    Emergency_label = tk.Label(window, text = "Emergency room hours:", font=('calibre',14, 'bold'))
-    Emergency_label.grid(row=4,column=0)
+    emergency_label = tk.Label(window, text = "Emergency room hours:", font=('calibre',14, 'bold'))
+    emergency_label.grid(row=4,column=0)
 
-    AriResult_label = tk.Label(window, text = str(totalHours_Emergency), font=('calibre',14, 'bold'))
-    AriResult_label.grid(row=4,column=2)
+    ari_result_label = tk.Label(window, text = str(total_hours_emergency), font=('calibre', 14, 'bold'))
+    ari_result_label.grid(row=4,column=2)
 
     window.mainloop()
